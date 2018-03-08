@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Form validation problem</title>
+    
+    <style>
+        /*
+            -------------------------------------------------------------------
+            Page prettiness
+            -------------------------------------------------------------------
+        */
+        body {
+            font-family: sans-serif;
+            line-height: 1.5;
+            color: #333;
+            /* edited by salin */
+            background: rgb(190, 189, 189);            
+            margin-left: auto;
+            margin-right: auto;
+            width:600px;
+        }
+
+        h1, h3 {
+            color: #576774;
+        }
+
+        h1:first-child {
+            margin-top: 0;
+        }
+
+        /*
+            -------------------------------------------------------------------
+            Form styles
+            -------------------------------------------------------------------
+        */
+        form {
+            background: #fff;
+            padding: 1em 1.25em;
+            border: solid 1px #ccc;
+            /* edited by salin */
+            border-radius: .55em;
+        }
+
+        label {
+            vertical-align: middle;
+        }
+        /*
+            Note: Don't change font-family on password inputs,
+            unless you want tiny •••• bullets :)
+        */
+        input[type='email'],/*edited by salin*/
+        input[type='text'],
+        input[type='submit'] {
+            font-family: sans-serif;
+        }
+        input[type='email'],/*edited by salin*/
+        input[type='text'],
+        input[type='password'],
+        input[type='submit'],
+        select {
+            font-size: 1em;
+            border-radius: .25em;
+            -webkit-appearance: none;
+            box-shadow: 3px 3px 3px #cccbcb; /*edited by salin*/
+
+        }
+        select,
+        input[type='email'],
+        input[type='text'],
+        input[type='password'] {
+            border: solid 1px #ddd;
+            padding: .5em .5em;
+            color: #555;
+            width: 16em;
+        }
+
+        input[type='submit'] {
+            border: solid 1px transparent;
+            background: #0B77DB;
+            color: #fff;
+            font-size: .875em;
+            padding: .75em 1em;
+            cursor: pointer;
+        }
+
+        input[type='submit']:hover {
+            background: #3C9AA7;
+        }
+
+        input[type='submit']:focus {
+            background: #3D6EAC;
+        }
+
+        input[type='email']:focus
+
+        input[type='email']:focus,
+        input[type='text']:focus,
+        input[type='password']:focus,
+        input[type='submit']:focus { 
+            outline: none;
+            border-color: #0B77DB;
+            box-shadow: 0 0 6px rgba(48, 140, 255, 0.25);
+        }
+
+        input[type='submit']:active {
+            background: #333;
+            border-color: #333;
+        }
+
+
+
+
+        label + input[type=checkbox] {
+            margin-left: 1em;
+        }
+
+        select {
+            width: 17em;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+        }
+
+        fieldset + fieldset {
+            border-top: solid 1px #eee;
+        }
+
+        .label {
+            width: 10em;
+            display: inline-block;
+        }
+
+        /*
+            -------------------------------------------------------------------
+            Error states
+            -------------------------------------------------------------------
+
+            An error class to forms that fail your validation:
+
+            <p class='error'>
+                <label for='field'></label>
+                <input id='field' type='text' value='foo'>
+            </p>
+        */
+        .error > input,
+        .error > label,
+        .error > select,
+        .error > span {
+            color: red;
+        }
+
+        .error > input,
+        .error > select {
+            border-color: red;
+        }
+        /*edited by salin*/
+        .errorred{
+            color: red;
+            font-size: 12px;
+            font-style: italic;
+        }
+        /*edited by salin*/
+        .display-none{
+            display: none;
+        }
+/*edited by salin*/
+/* Just to make it a bit responsive */
+    @media screen and (max-width: 600px)
+    {
+     body {
+         width:100%;
+     }  
+    }
+    </style>
+   
+</head>
+
+<body>
+    <script type="text/javascript" language="JavaScript">
+        // funtion will be called on clicking the submit button
+        function myformfunction(theForm) {
+                var count = 0;
+                var a = (document.getElementsByName("email")[0].value);
+                var b = document.getElementsByName("password")[0].value;
+                var c = document.getElementsByName("colour")[0].value;
+                // Check validation of the email
+                // will notify if the string is empty and if the email address is not in correct format
+                if (a == "") {
+                    (document.querySelector("#erroremail")).innerHTML = "Please enter an email address";
+                    count = count + 1;
+                    document.getElementById("email-container").classList.add("error");
+
+                }
+                else {
+                    var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+                    var emailvalid = re.test(String(a).toLowerCase());
+                    if (emailvalid) {
+                        (document.querySelector("#erroremail")).innerHTML = "";
+                        document.getElementById("email-container").classList.remove("error");                        
+                    }
+                    else {
+                        (document.querySelector("#erroremail")).innerHTML = "Please enter a valid email address";
+                        count = count + 1;
+                        document.getElementById("email-container").classList.add("error");
+                    }
+                }
+                // check if password is entered or has a min of 8 charectors
+                if (b == "") {
+                    (document.querySelector("#errorpassword")).innerHTML = "Please enter a password";
+                    count = count + 1;
+                    document.getElementById("password-container").classList.add("error");
+                    
+                }
+                else { 
+                    if (b.length < 8) {
+                        (document.querySelector("#errorpassword")).innerHTML = "Password should be atleast 8 charecters";
+                        document.getElementById("password-container").classList.add("error");
+                        count = count + 1;
+                    }
+                    else {
+                        (document.querySelector("#errorpassword")).innerHTML = "";
+                        document.getElementById("password-container").classList.remove("error");
+                    }
+                }
+                // a color should be selected
+                if (c == "") {
+                    (document.querySelector("#errorcolor")).innerHTML = "Please select a colour";
+                    document.getElementById("color-container").classList.add("error");                    
+                    count = count + 1;
+                }
+                else {
+                    (document.querySelector("#errorcolor")).innerHTML = "";
+                    document.getElementById("color-container").classList.remove("error");                                        
+                    submit = true;
+                }
+                // atleast 2 checkboxes should be ticked
+                var boxesTicked = [];
+                for (i = document.getElementsByName('animal').length - 1; i >= 0; i--) {
+                    if (document.getElementsByName('animal')[i].checked) {
+                        boxesTicked.push(document.getElementsByName('animal')[i].value);
+
+                    }
+                }
+                // if tiger is ticked then Tiger type should be entered
+                var tigerticked = false
+                for (i = 0; i < boxesTicked.length; i++) {
+                    if (boxesTicked[i] == "tiger") {
+                        tigerticked = true;
+                    }
+                }
+                if (tigerticked == true && document.getElementById("tiger_type").value == "") {
+                    document.getElementById("tiger_type").required = true;
+                    (document.querySelector("#tigertypeerror")).innerHTML = "Tiger type should be entered";
+                    count = count + 1;
+                    document.getElementById("tigertype-container").classList.add("error");                    
+
+                 }
+
+                else {
+                    (document.querySelector("#tigertypeerror")).innerHTML = "";
+                    document.getElementById("tiger_type").required = false;
+                    document.getElementById("tigertype-container").classList.remove("error");                                        
+                }
+                if (boxesTicked.length < 2) {
+                    (document.querySelector("#errorcheckbox")).innerHTML = "atleast two values required";
+                    document.getElementById("animal-container").classList.add("error");                    
+                    count = count + 1;
+                }
+                else {
+                    (document.querySelector("#errorcheckbox")).innerHTML = "";
+                    document.getElementById("animal-container").classList.remove("error");                  
+                    
+                }
+
+                // if any of the validation fails the form will not be submitted
+                if (count != 0) {
+                    return false;
+                }
+                else
+                alert("Form submitted succesfully")
+            } 
+            // Show Tyger type check box if tiger is ticked
+        function tigertype(theForm){
+            var a =document.getElementById('tiger').checked;
+            if(a){
+                document.getElementById("tigertype-container").classList.remove("display-none");                                    
+                 document.getElementById("tiger_type").required = true;
+            }
+            else{
+                document.getElementById("tigertype-container").classList.add("display-none");
+                (document.querySelector("#tigertypeerror")).innerHTML = "";
+                document.getElementById("tiger_type").required = true;
+            }
+        }
+
+    </script>
+    <form method='post' action='' name="formname" >
+        <h1>Fill out this awesome form</h1>
+        <fieldset>
+            <h3>Your details</h3>
+            <p id="email-container">
+                <label class='label' for='email'id="labelemail">
+                    Email
+                </label>
+                <input type="email" id='email' name='email' placeholder="Email" required>
+                <p id="erroremail" class="errorred"></p>
+                
+            </p>
+            <p id="password-container">
+                <label class='label' for='password'>
+                    Password
+                </label>
+                <input class='error' type='password' id='password'placeholder="Password" name='password'min="8" pattern=".{8,}" required >
+                <p id="errorpassword" class="errorred"></p>
+                
+            </p>
+        </fieldset>
+
+        <fieldset>
+            <h3>Your animal</h3>
+            <p id="color-container">
+                <label class='label' for='colour'>
+                    Colour
+                </label>
+                <select name='colour' id='colour' required>
+                    <option value=''>Choose colour</option>
+                    <option value='blue'>Blue</option>
+                    <option value='green'>Green</option>
+                    <option value='red'>Red</option>
+                    <option value='black'>Black</option>
+                    <option value='brown'>Brown</option>
+                </select>
+                <p id="errorcolor" class="errorred"></p>
+                
+            </p>
+            <p id="animal-container">
+                <span class="label">
+                    Animal
+                </span>
+                
+                <input type='checkbox' name='animal' value='bear' id='bear'>
+                <label for='bear'>
+                     Bear
+                </label>
+
+                <input type='checkbox' name='animal' value='tiger' id='tiger' onclick="tigertype(this)">
+                <label for='tiger'>
+                    Tiger
+                </label>
+
+                <input type='checkbox' name='animal' value='snake' id='snake'>
+                <label for='snake'>
+                     Snake
+                </label>
+
+                <input type='checkbox' name='animal' value='donkey' id='donkey'>
+                <label for='donkey'>
+                     Donkey
+                </label>
+                <p id="errorcheckbox" class="errorred" ></p>
+                
+                
+
+            </p>
+            <p id="tigertype-container"class="display-none">
+                <label class='label' for='tiger_type'>
+                    Type of tiger
+                </label>
+                <input type='text' name='tiger_type' id='tiger_type'placeholder="Type of the tiger" onchange="tigertype()">
+                <p id="tigertypeerror" class="errorred"></p>
+            </p>
+        </fieldset>
+        <fieldset>
+            <p>
+                <input type='submit' value='Create account' id="submit" onclick="return myformfunction(this)"value="submit">
+            </p>
+        </fieldset>
+    </form>
+</body>
+</html>

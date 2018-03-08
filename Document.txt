@@ -1,0 +1,25 @@
+
+
+#Form Validation
+--The Form is validated using Javascript. It will be validated when the submit button is clicked.
+--An error message will be displayed mentioning what type of error occured preventing form submission.
+--have commented each section about what the code does.
+--Added placeholders.
+
+Beautify
+--Applied some CSS to beautify the form(not much due to limited time)
+--Applied some CSS to make it responsive
+--edited some styles which was already there which makes it look good. Example : Select input textbox style was different form the others.
+----The Tiger type input field will be displayed only if the tiger check box is checked.
+
+Testing
+--I have tested the form so that all the validation is working properly and the form is not submitted unless the form is validated.
+--Tested accross browsers -Microsoft Edge, Mozilla firefox, Chrome.
+-- have used onclick event for tiger checkbox to make it work for ie browser.
+
+
+-Took Extra time since I used Javascript instead of any of the Javascript Frameworks
+-Couldn't do real time validation since I was using Javascript. Can use AngularJS which helps to do real time validation using two way data binidng property of angular.
+-URL that I have used for reference.
+https://stackoverflow.com
+https://www.w3schools.com
